@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ScarpNav = () => {
+const ScarpNav = ({setIsStorage}) => {
   return (
     <NavContainer>
       <NavList>
         <NavItem>
-          <Text>스크랩</Text>
-          <CountBox>20</CountBox>
+          <Text scrap>스크랩</Text>
+          <CountBox scrap>20</CountBox>
         </NavItem>
       </NavList>
       <NavList>
@@ -17,9 +17,9 @@ const ScarpNav = () => {
         </NavItem>
       </NavList>
       <NavList>
-        <NavItem>
+        <NavItem onClick={() => setIsStorage(true)}>
           <Text>저장된 비교함</Text>
-          <CountBox>20</CountBox>
+          <CountBox>3</CountBox>
         </NavItem>
       </NavList>
     </NavContainer>
@@ -42,6 +42,7 @@ const NavList = styled.li`
 
 const NavItem = styled.div`
   display: flex;
+  cursor: pointer;
 `;
 
 const Text = styled.p`
@@ -49,20 +50,24 @@ const Text = styled.p`
   font-size: 20px;
   font-weight: 700;
   margin-right: 8px;
-  color: #373f57;
+  color: #8491a7;
+
+  ${(props) => props.scrap && 'color: #373f57;'}
 `;
 
 const CountBox = styled.div`
   width: 46px;
   height: 28px;
-  line-height: 31px;
+  line-height: 32px;
   font-size: 20px;
   font-weight: 700;
   border-radius: 40px;
   padding: 0 11px;
   text-align: center;
   color: white;
-  background-color: #373f57;
+  background-color: #8491a7;
+
+  ${(props) => props.scrap && 'background-color: #373f57;'}
 `;
 
 export default ScarpNav;

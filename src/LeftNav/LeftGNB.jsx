@@ -2,7 +2,7 @@ import {useState} from 'react';
 import styled from 'styled-components';
 import NavMemu from './NavMemu';
 
-const LeftGNB = ({show, setShow}) => {
+const LeftGNB = ({show, setShow, setIsCompare}) => {
   const [navToggle, setNavToggle] = useState(false);
   return (
     <>
@@ -27,7 +27,12 @@ const LeftGNB = ({show, setShow}) => {
             onClick={() => setNavToggle((curr) => !curr)}
           />
         </HeaderBox>
-        <NavMemu navToggle={navToggle} show={show} setShow={setShow} />
+        <NavMemu
+          navToggle={navToggle}
+          show={show}
+          setShow={setShow}
+          setIsCompare={setIsCompare}
+        />
       </LeftContainer>
     </>
   );
@@ -37,6 +42,7 @@ const BackBox = styled.div`
   width: ${({navToggle}) => (navToggle ? '72px' : '270px')};
   height: 200vh;
   transition: width 0.5s;
+  flex-shrink: 0;
 `;
 
 const LeftContainer = styled.div`

@@ -1,8 +1,8 @@
 import {useState} from 'react';
 import styled from 'styled-components';
 
-const CardItem = ({list}) => {
-  const [isFull, setIsFull] = useState(false);
+const CardItem = ({cardList}) => {
+  const {id, company, title, tag} = cardList;
   const [isShow, setIsShow] = useState(false);
 
   const handleShowButton = () => {
@@ -10,60 +10,34 @@ const CardItem = ({list}) => {
   };
 
   return (
-    <>
-      <CardItemContainer
-        onMouseEnter={handleShowButton}
-        onMouseLeave={handleShowButton}>
-        <Info>(주)개기조 컴퍼니</Info>
-        <Notice>공고명 한줄만 공고제목 한줄만 공고에요</Notice>
-        <TagList>
-          <Tag>#직무명</Tag>
-          <Tag>#지역명</Tag>
-        </TagList>
-        <BottomContainer>
-          <EndDay>~03/08</EndDay>
-          <ApplyButton>입사지원</ApplyButton>
-        </BottomContainer>
-        {isShow && <CloseButton>X</CloseButton>}
-      </CardItemContainer>
-      <CardItemContainer>
-        <Info>(주)개기조 컴퍼니</Info>
-        <Notice>공고명 한줄만 공고제목 한줄만 공고에요</Notice>
-        <TagList>
-          <Tag>#직무명</Tag>
-          <Tag>#지역명</Tag>
-        </TagList>
-        <BottomContainer>
-          <EndDay>~03/08</EndDay>
-          <ApplyButton>입사지원</ApplyButton>
-        </BottomContainer>
-      </CardItemContainer>
-      {!isFull && (
-        <CardItemContainer default>
-          <Info>+</Info>
-          <Notice>비교하고 싶은 공고를 추가해 보세요</Notice>
-          <TagList>
-            <Tag default>더 많은 공고를 비교하고 싶다면?</Tag>
-          </TagList>
-          <BottomContainer>
-            <ApplyButton default>추천공고보기</ApplyButton>
-          </BottomContainer>
-        </CardItemContainer>
+    <CardItemContainer
+      onMouseEnter={handleShowButton}
+      onMouseLeave={handleShowButton}>
+      <Info>{company}</Info>
+      <Notice>{title}</Notice>
+      <TagList>
+        {tag.map((tags, index) => (
+          <Tag key={index}>{`#${tags}`}</Tag>
+        ))}
+      </TagList>
+      <BottomContainer>
+        <EndDay>~03/08</EndDay>
+        <ApplyButton>입사지원</ApplyButton>
+      </BottomContainer>
+      {isShow && (
+        <CloseButton>
+          <Image src="./scrap/closeButton.png" alt="close" />
+        </CloseButton>
       )}
-      <CompareContainer>
-        <CompareButton>공고 비교하기</CompareButton>
-        <ResetButton>비교함 초기화</ResetButton>
-      </CompareContainer>
-    </>
+    </CardItemContainer>
   );
 };
 
-const CardItemContainer = styled.li`
+const Card = styled.li`
   width: 332px;
   border-radius: 16px;
-  padding: 28px 24px 20px;
+  padding: 0 24px 20px;
   margin-right: 16px;
-  background-color: #eff5ff;
   position: relative;
   cursor: pointer;
   transition: 200ms ease-in;
@@ -71,9 +45,11 @@ const CardItemContainer = styled.li`
   &:hover {
     box-shadow: 0px 5px 8px rgba(92, 102, 123, 0.12);
   }
+`;
 
-  ${(props) =>
-    props.default && 'border: 1px solid black; background: transparent;'}
+const CardItemContainer = styled(Card)`
+  padding-top: 28px;
+  background-color: #f0f5ff;
 `;
 
 const Info = styled.p`
@@ -93,6 +69,8 @@ const Notice = styled.p`
   font-weight: 700;
   margin-bottom: 8px;
   color: #373f57;
+  display: flex;
+  overflow: hidden;
 `;
 
 const TagList = styled.ul`
@@ -111,8 +89,6 @@ const Tag = styled.li`
   &:last-child {
     margin-right: 0;
   }
-
-  ${(props) => props.default && 'color: black;'}
 `;
 
 const BottomContainer = styled.div`
@@ -126,6 +102,13 @@ const CloseButton = styled.button`
   right: 12px;
 `;
 
+const Image = styled.img`
+  width: 24px;
+  height: 24px;
+
+  ${(props) => props.plus && 'margin-right: 4px;'}
+`;
+
 const EndDay = styled.p`
   height: 20px;
   line-height: 28px;
@@ -134,43 +117,18 @@ const EndDay = styled.p`
   color: #5c667b;
 `;
 
-const ApplyButton = styled.button`
+const Button = styled.button`
   height: 26px;
   font-size: 12px;
   font-weight: 400;
   padding: 3px 11px;
   margin-left: 8px;
   border-radius: 4px;
-  border: 1px solid #dc3434;
-  color: #dc3434;
-
-  ${(props) => props.default && 'border-color: black; color: black;'}
 `;
 
-const CompareContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CompareButton = styled.button`
-  width: 204px;
-  height: 130px;
-  font-size: 24px;
-  font-weight: 700;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  background-color: #3157dd;
-  color: white;
-`;
-
-const ResetButton = styled.button`
-  height: 48px;
-  line-height: 48px;
-  font-size: 18px;
-  font-weight: 700;
-  border-radius: 8px;
-  border: 1px solid #8491a7;
-  color: #5c667b;
+const ApplyButton = styled(Button)`
+  border: 1px solid #4876ef;
+  color: #4876ef;
 `;
 
 export default CardItem;
